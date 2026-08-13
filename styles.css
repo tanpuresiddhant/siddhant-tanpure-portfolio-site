@@ -991,7 +991,7 @@ summary {
 .proof-grid {
   display: grid;
   gap: 1px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 44px;
 }
 
@@ -1192,6 +1192,10 @@ footer > a:hover {
 
   .timeline-detail {
     grid-column: 3;
+  }
+
+  .proof-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
