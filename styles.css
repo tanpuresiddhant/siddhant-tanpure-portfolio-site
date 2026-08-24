@@ -853,8 +853,27 @@ summary {
   font-size: 12px;
   font-weight: 700;
   gap: 8px;
-  margin-top: 22px;
   text-decoration: none;
+}
+
+.criterion-evidence-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 22px;
+}
+
+.criterion-evidence-link:hover,
+.criterion-evidence-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+#meta-signals-evidence,
+#teams-pitr-evidence,
+#mentoring-evidence,
+#awards-proof {
+  scroll-margin-top: 100px;
 }
 
 .career-section {
