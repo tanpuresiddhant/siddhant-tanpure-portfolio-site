@@ -232,24 +232,24 @@
 </div>
 <div class="criteria-tabs">
 <div class="criteria-tab-list" role="tablist" aria-label="BCS Fellowship criteria">
-<button aria-controls="criterion-panel-responsibility" aria-selected="true" class="criteria-tab" id="criterion-tab-responsibility" role="tab" tabindex="0" type="button">
+<button aria-controls="bcs-responsibility" aria-selected="true" class="criteria-tab" id="criterion-tab-responsibility" role="tab" tabindex="0" type="button">
 <span>01</span>
 <strong>Body of work — Responsibility</strong>
 </button>
-<button aria-controls="criterion-panel-mentoring" aria-selected="false" class="criteria-tab" id="criterion-tab-mentoring" role="tab" tabindex="-1" type="button">
+<button aria-controls="bcs-mentoring-coaching" aria-selected="false" class="criteria-tab" id="criterion-tab-mentoring" role="tab" tabindex="-1" type="button">
 <span>02</span>
 <strong>Professional impact — Mentoring and coaching</strong>
 </button>
-<button aria-controls="criterion-panel-innovation" aria-selected="false" class="criteria-tab" id="criterion-tab-innovation" role="tab" tabindex="-1" type="button">
+<button aria-controls="bcs-invention-innovation" aria-selected="false" class="criteria-tab" id="criterion-tab-innovation" role="tab" tabindex="-1" type="button">
 <span>03</span>
 <strong>Body of work — Invention and innovation</strong>
 </button>
-<button aria-controls="criterion-panel-recognition" aria-selected="false" class="criteria-tab" id="criterion-tab-recognition" role="tab" tabindex="-1" type="button">
+<button aria-controls="bcs-awards" aria-selected="false" class="criteria-tab" id="criterion-tab-recognition" role="tab" tabindex="-1" type="button">
 <span>04</span>
 <strong>Standing in the community — Awards</strong>
 </button>
 </div>
-<article aria-labelledby="criterion-tab-responsibility" class="criterion-panel" id="criterion-panel-responsibility" role="tabpanel" tabindex="0">
+<article aria-labelledby="criterion-tab-responsibility" class="criterion-panel" id="bcs-responsibility" role="tabpanel" tabindex="0">
 <div class="criterion-panel-heading">
 <div>
 <p class="criterion-label">Criterion 01 / Body of work</p>
@@ -308,7 +308,7 @@
 </div>
 </div>
 </article>
-<article aria-labelledby="criterion-tab-mentoring" class="criterion-panel" hidden="" id="criterion-panel-mentoring" role="tabpanel" tabindex="0">
+<article aria-labelledby="criterion-tab-mentoring" class="criterion-panel" hidden="" id="bcs-mentoring-coaching" role="tabpanel" tabindex="0">
 <div class="criterion-panel-heading">
 <div>
 <p class="criterion-label">Criterion 02 / Professional impact</p>
@@ -364,7 +364,7 @@
 </div>
 </div>
 </article>
-<article aria-labelledby="criterion-tab-innovation" class="criterion-panel" hidden="" id="criterion-panel-innovation" role="tabpanel" tabindex="0">
+<article aria-labelledby="criterion-tab-innovation" class="criterion-panel" hidden="" id="bcs-invention-innovation" role="tabpanel" tabindex="0">
 <div class="criterion-panel-heading">
 <div>
 <p class="criterion-label">Criterion 03 / Body of work</p>
@@ -423,7 +423,7 @@
 </div>
 </div>
 </article>
-<article aria-labelledby="criterion-tab-recognition" class="criterion-panel" hidden="" id="criterion-panel-recognition" role="tabpanel" tabindex="0">
+<article aria-labelledby="criterion-tab-recognition" class="criterion-panel" hidden="" id="bcs-awards" role="tabpanel" tabindex="0">
 <div class="criterion-panel-heading">
 <div>
 <p class="criterion-label">Criterion 04 / Standing in the community</p>
@@ -711,14 +711,24 @@
 (() => {
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   const panels = [...document.querySelectorAll('[role="tabpanel"]')];
-  const activate = (index, focus = false) => {
+  const activate = (index, focus = false, updateHash = true) => {
     tabs.forEach((tab, tabIndex) => {
       const active = tabIndex === index;
       tab.setAttribute('aria-selected', String(active));
       tab.tabIndex = active ? 0 : -1;
     });
     panels.forEach((panel, panelIndex) => { panel.hidden = panelIndex !== index; });
+    if (updateHash && window.location.hash !== `#${panels[index].id}`) {
+      window.history.replaceState(null, '', `#${panels[index].id}`);
+    }
     if (focus) tabs[index].focus();
+  };
+  const activateFromHash = () => {
+    const index = panels.findIndex((panel) => `#${panel.id}` === window.location.hash);
+    if (index >= 0) {
+      activate(index, false, false);
+      document.querySelector('#fellowship')?.scrollIntoView({ block: 'start' });
+    }
   };
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => activate(index));
@@ -733,6 +743,8 @@
       activate(nextIndex, true);
     });
   });
+  window.addEventListener('hashchange', activateFromHash);
+  activateFromHash();
 })();
 </script>
 </body>
