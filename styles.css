@@ -990,6 +990,27 @@ summary {
   margin-top: 28px;
 }
 
+.engagement-heading {
+  margin-top: 72px;
+}
+
+.engagement-grid article {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.engagement-grid h3 {
+  margin: 10px 0 0;
+}
+
+.engagement-grid article > p:not(.kicker) {
+  color: var(--ink-soft);
+  flex: 1;
+  font-size: 13px;
+  margin: 0;
+}
+
 .recognition-panel {
   background: var(--ink);
   color: var(--white);
